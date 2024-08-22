@@ -2,20 +2,21 @@ import 'flowbite';
 import Footer from './Footer';
 import Nav from './Nav';
 import { useSelector, useDispatch } from 'react-redux';
-// import { updateQuantity, removeItem } from './CartSlice'; // Assuming these actions are created in CartSlice
+import { updateQuantity, removeItem } from './CartSlice'; // Assuming these actions are created in CartSlice
 
 function Cart() {
   const cart = useSelector((store) => store.cart);
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
   const dispatch = useDispatch();
 
-  //   const handleQuantityChange = (product, newQuantity) => {
-  //     if (newQuantity < 1) return; // Prevent setting quantity to less than 1
-  //     dispatch(updateQuantity({ productId: product.id, quantity: newQuantity }));
-  //   };
+  const handleQuantityChange = (product, newQuantity) => {
+    if (newQuantity < 1) return; // Prevent setting quantity to less than 1
+    dispatch(updateQuantity({ productId: product.id, quantity: newQuantity }));
+  };
 
-  //   const handleRemoveItem = (productId) => {
-  //     dispatch(removeItem(productId));
-  //   };
+  const handleRemoveItem = (productId) => {
+    dispatch(removeItem(productId));
+  };
 
   return (
     <div>
@@ -65,9 +66,9 @@ function Cart() {
                     <button
                       className="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                       type="button"
-                      //   onClick={() =>
-                      //     handleQuantityChange(product, product.quantity - 1)
-                      //   }
+                      onClick={() =>
+                        handleQuantityChange(product, product.quantity - 1)
+                      }
                     >
                       <span className="sr-only">Decrease quantity</span>
                       <svg
@@ -89,17 +90,17 @@ function Cart() {
                     <input
                       type="number"
                       value={product.quantity}
-                      //   onChange={(e) =>
-                      //     handleQuantityChange(product, parseInt(e.target.value))
-                      //   }
+                      onChange={(e) =>
+                        handleQuantityChange(product, parseInt(e.target.value))
+                      }
                       className="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                     <button
                       className="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                       type="button"
-                      //   onClick={() =>
-                      //     handleQuantityChange(product, product.quantity + 1)
-                      //   }
+                      onClick={() =>
+                        handleQuantityChange(product, product.quantity + 1)
+                      }
                     >
                       <span className="sr-only">Increase quantity</span>
                       <svg
@@ -128,7 +129,7 @@ function Cart() {
                 </td>
                 <td className="px-6 py-4">
                   <button
-                    // onClick={() => handleRemoveItem(product.id)}
+                    onClick={() => handleRemoveItem(product.id)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline"
                   >
                     Remove
@@ -139,6 +140,27 @@ function Cart() {
           </tbody>
         </table>
       </div>
+
+      <div className="flex">
+        <div className="mt-4 mr-5 mb-auto w-full max-w-xs p-2 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 ml-auto">
+          <h5 className="mb-1 text-xl font-medium text-gray-500 dark:text-gray-400">
+            Subtotal
+          </h5>
+          <div className="flex items-baseline text-gray-900 dark:text-white">
+            <span className="text-3xl font-semibold">₹</span>
+            <span className="text-3xl font-semibold tracking-tight mb-1">
+              {totalAmount}
+            </span>
+          </div>
+          <button
+            type="button"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center"
+          >
+            Continue to checkout
+          </button>
+        </div>
+      </div>
+
       <Footer />
     </div>
   );
