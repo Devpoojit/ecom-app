@@ -3,6 +3,7 @@ import Footer from './Footer';
 import Nav from './Nav';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateQuantity, removeItem } from './CartSlice';
+import toast from 'react-hot-toast';
 
 function Cart() {
   const cart = useSelector((store) => store.cart);
@@ -15,7 +16,9 @@ function Cart() {
       response = window.confirm('Are you sure you want to remove this item?');
       if (response) {
         dispatch(removeItem(product.id));
+        toast.success('Product removed from cart');
       } else {
+        toast.error("Product wasn't removed from cart");
         return;
       }
     }
@@ -27,7 +30,9 @@ function Cart() {
     response = window.confirm('Are you sure you want to remove this item?');
     if (response) {
       dispatch(removeItem(productId));
+      toast.success('Product removed from cart');
     } else {
+      toast.error("Product wasn't removed from cart");
       return;
     }
   };

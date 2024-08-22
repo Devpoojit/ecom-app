@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import Carousel from './Carousel';
 import { addItem } from './CartSlice';
 import { useDispatch } from 'react-redux';
+import toast from 'react-hot-toast';
 
 function Products() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function Products() {
 
   const addToCart = (product) => {
     dispatch(addItem(product));
+    toast.success('Product added to cart');
   };
 
   useEffect(() => {

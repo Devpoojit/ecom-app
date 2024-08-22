@@ -1,6 +1,6 @@
 import 'flowbite';
 
-function Carousel({ images }) {
+function Carousel() {
   return (
     <div
       id="default-carousel"
@@ -33,7 +33,6 @@ function Carousel({ images }) {
             alt="..."
           />
         </div>
-        {/* FIXME: ADD CAROUSEL ITEMS AGAIN */}
         {/* <!-- Item 4 --> */}
         <div className="hidden duration-700 ease-in-out" data-carousel-item>
           <img
