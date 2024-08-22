@@ -1,6 +1,6 @@
 import 'flowbite';
 
-function Carousel() {
+function Carousel({ images }) {
   return (
     <div
       id="default-carousel"
