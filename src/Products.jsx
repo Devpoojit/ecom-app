@@ -6,11 +6,9 @@ import { useDispatch } from 'react-redux';
 function Products() {
   const dispatch = useDispatch();
 
-  const limitBox = useRef();
   const [totalProducts, setTotalProducts] = useState(0);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [limit, setLimit] = useState(100);
   const [totalPages, setTotalPages] = useState(0);
