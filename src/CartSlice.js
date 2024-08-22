@@ -8,9 +8,14 @@ const slice = createSlice({
   reducers: {
     addItem: (state, action) => {
       const product = action.payload;
-      console.log(product);
-
-      state.products.push(product);
+      const status = state.products.some((p) => p.id === product.id);
+      if (status) {
+        state.products = state.products.map((p) =>
+          p.id === product.id ? { ...p, quantity: p.quantity + 1 } : p
+        );
+      } else {
+        state.products.push({ ...product, quantity: 1 });
+      }
     },
   },
 });
