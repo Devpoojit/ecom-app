@@ -2,7 +2,7 @@ import 'flowbite';
 import Footer from './Footer';
 import Nav from './Nav';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateQuantity, removeItem } from './CartSlice'; // Assuming these actions are created in CartSlice
+import { updateQuantity, removeItem } from './CartSlice';
 
 function Cart() {
   const cart = useSelector((store) => store.cart);
@@ -10,12 +10,26 @@ function Cart() {
   const dispatch = useDispatch();
 
   const handleQuantityChange = (product, newQuantity) => {
-    if (newQuantity < 1) return; // Prevent setting quantity to less than 1
+    if (newQuantity < 1) {
+      let response = false;
+      response = window.confirm('Are you sure you want to remove this item?');
+      if (response) {
+        dispatch(removeItem(product.id));
+      } else {
+        return;
+      }
+    }
     dispatch(updateQuantity({ productId: product.id, quantity: newQuantity }));
   };
 
   const handleRemoveItem = (productId) => {
-    dispatch(removeItem(productId));
+    let response = false;
+    response = window.confirm('Are you sure you want to remove this item?');
+    if (response) {
+      dispatch(removeItem(productId));
+    } else {
+      return;
+    }
   };
 
   return (
