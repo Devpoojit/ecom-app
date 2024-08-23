@@ -1,16 +1,20 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Carousel from './Carousel';
 import { addItem } from './CartSlice';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 function Products() {
   const dispatch = useDispatch();
 
+  // eslint-disable-next-line no-unused-vars
   const [totalProducts, setTotalProducts] = useState(0);
+  const [load, setLoad] = useState(false);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  // eslint-disable-next-line no-unused-vars
   const [limit, setLimit] = useState(100);
   const [totalPages, setTotalPages] = useState(0);
   const [category, setCategory] = useState([]);
@@ -28,6 +32,7 @@ function Products() {
         setTotalPages(Math.ceil(data.total / limit)); // Calculate total pages
         const categories = data.products.map((product) => product.category);
         setCategory([...new Set(categories)]);
+        setLoad(true);
       })
       .catch((error) => {
         console.error(error);
@@ -52,12 +57,14 @@ function Products() {
   };
 
   useEffect(() => {
-    loadData();
+    if (!load) {
+      loadData();
+    }
   });
 
   return (
     <div>
-      <Carousel images={products.map((product) => product.images[0])} />
+      <Carousel />
       {/* Categories */}
       <div className="flex items-center justify-center py-4 md:py-8 flex-wrap">
         <button
@@ -82,19 +89,19 @@ function Products() {
       </div>
 
       {/* Catalogue */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         {filteredProducts.map((product) => (
           <div
             key={product.id}
             className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
           >
-            <a href="#">
+            <Link to="/Product">
               <img
                 className="p-8 rounded-t-lg"
                 src={product.thumbnail}
                 alt="product image"
               />
-            </a>
+            </Link>
             <div className="px-5 pb-5">
               <a href="#">
                 <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
